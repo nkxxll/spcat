@@ -3,6 +3,8 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"spcat/pkg/content"
+	"spcat/pkg/renderer"
 
 	"github.com/spf13/cobra"
 )
@@ -14,13 +16,16 @@ var rootCmd = &cobra.Command{
 	Short:      "Special cat command",
 	Long:       `Special cat command that can show images and pdf and every other file type.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
+		adress := args[0]
+		content := content.GetContent(adress)
+		img := renderer.GenerateKittyPic(content, renderer.KittyOptions)
+		os.Stdout.Write(img)
 	},
 }
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
 }
