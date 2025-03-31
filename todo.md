@@ -12,7 +12,7 @@ Todos for the `spcat` project...
 - this is more performant
 - or use the byte buffer
 
-## jpg cli
+## jpg cli (done)
 
 - make jpg available from the cli
 - currently only from the web

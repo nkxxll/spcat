@@ -65,7 +65,19 @@ func getFileContent(adress string, fi os.FileInfo) []byte {
 		fmt.Fprintln(os.Stderr, "Error reading file!")
 		os.Exit(1)
 	}
-	return content
+
+	contentType := http.DetectContentType(content)
+	if contentType == "image/jpeg" {
+		return getJPEGContent(content)
+	}
+
+	if contentType == "image/png" {
+		return content
+	}
+
+	fmt.Fprintln(os.Stderr, "This file type is not jet supported")
+	os.Exit(1)
+	return nil
 }
 
 // getJPEGContent aka convert jpg bytes to png bytes and return them todo
